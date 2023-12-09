@@ -182,3 +182,103 @@ def game_dict():
             ]
         }
     }
+
+def num_points_per_game(chosen_player):
+    players = game_dict()["home"]["players"] + game_dict()["away"]["players"]
+    for player in players:
+        if player["name"] == chosen_player:
+            return player["points_per_game"]
+        
+def player_age(chosen_player):
+    players = game_dict()["home"]["players"] + game_dict()["away"]["players"]
+    for player in players:
+        if player["name"] == chosen_player:
+            return player["age"]
+
+# ### `team_colors()`
+# Build a function, `team_colors()`, that takes in an argument of the team name
+# and returns a `list` of that team's colors.
+
+# def team_colors(team_name):
+#     team_colors_away = game_dict()["away"]["colors"]
+#     team_colors_home = game_dict()["home"]["colors"]
+    
+#     if team_name == team["team_name"]:
+        
+#         pass
+        # if team[0] == team_name:
+        #     return team["colors"]
+
+def team_colors(team_name):
+    for team in game_dict():
+        if game_dict()[team]["team_name"] == team_name:
+            return (game_dict()[team]["colors"])
+
+def team_names():
+    team_names_list = []
+    for team in game_dict():
+        team_names_list.append(game_dict()[team]["team_name"])
+    return team_names_list
+
+def player_numbers(team_name):
+    def list_numbers(team):
+        numbers = []
+        team_members = game_dict()[team]["players"]
+        [numbers.append(player["number"]) for player in team_members]
+        print(numbers)
+        return numbers
+    for team in game_dict():
+        if game_dict()[team]["team_name"] == team_name:
+            return list_numbers(team)
+
+def player_stats(chosen_player):
+    players = game_dict()["home"]["players"] + game_dict()["away"]["players"]
+    for player in players:
+        if player["name"] == chosen_player:
+            return player
+    
+def average_rebounds_by_shoe_brand():
+    shoe_dict = {}
+    players = game_dict()["home"]["players"] + game_dict()["away"]["players"]
+    for player in players:
+        shoe = player["shoe_brand"]
+        if shoe in shoe_dict:
+            shoe_dict[shoe].append(player["rebounds_per_game"])
+        else:
+            shoe_dict[shoe] = []
+            shoe_dict[shoe].append(player["rebounds_per_game"])
+    for shoe_brand in shoe_dict:
+        average = sum(shoe_dict[shoe_brand]) / len(shoe_dict[shoe_brand])
+        number = "{:.2f}".format(average)
+        shoe_dict[shoe_brand] = number
+    for brand in shoe_dict:
+        print(f"{brand}: {shoe_dict[brand]}")
+        ### CHALLENGE: `average_rebounds_by_shoe_brand()`
+# Build a function, `average_rebounds_by_shoe_brand()`, that will calculate the
+# average number of rebounds for players who wear a particular shoe brand. The
+# function should print out a message for each brand using the following format:
+# ```console
+# "<Brand>": average_rebounds
+# ```
+# The average should be printed as a float with two decimal places.
+# Building this function will offer several challenges. You'll want to break it
+# down into steps. Here is one possible approach:
+# First, create a dictionary that will keep track of the shoe brands along with a
+# list of the numbers of rebounds for all the players who wear that brand of shoe.
+# An entry in the dictionary may look something like this:
+# ```py
+# { "Nike": [5.0, 8.1, 4.7] }
+# ```
+# **Hint**: As you iterate through the players in `game_dict()`, you will need to
+# check whether the player's shoe brand is already in the dictionary. If it isn't,
+# you will add the brand as a key, and a list containing the current player's
+# rebounds as the value. If it is already present, you will simply add the
+# rebounds to the array.
+# Next, iterate through the dictionary you've created to calculate the average
+# rebounds for each brand. The average is the sum of all the values divided by the
+# number of values. For example, using the example above, the average is:
+# ```text
+# (5.0 + 8.1 + 4.7)/3 = 5.93
+# ```
+# **Hint**: You may want to use Google to help you with this step.
+# Finally, print the results to the screen.
